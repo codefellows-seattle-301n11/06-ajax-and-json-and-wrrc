@@ -8,7 +8,6 @@ function Article (rawDataObj) {
   this.body = rawDataObj.body;
   this.publishedOn = rawDataObj.publishedOn;
 }
-
 // REVIEW: Instead of a global `articles = []` array, let's attach this list of all articles directly to the constructor function. Note: it is NOT on the prototype. In JavaScript, functions are themselves objects, which means we can add properties/values to them at any time. In this case, the array relates to ALL of the Article objects, so it does not belong on the prototype, as that would only be relevant to a single instantiated Article.
 Article.all = [];
 
@@ -48,6 +47,6 @@ Article.fetchAll = () => {
     Article.loadAll();
 
   } else {
-
+    //
   }
 }
