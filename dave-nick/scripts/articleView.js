@@ -111,11 +111,12 @@ articleView.initIndexPage = () => {
   Article.all.forEach(article => {
     $('#articles').append(article.toHtml())
   });
-
+  event.preventDefault(); //not sure if this is in the right place, but the age stopped loading over and over again
   articleView.populateFilters();
   articleView.handleCategoryFilter();
   articleView.handleAuthorFilter();
   articleView.handleMainNav();
   articleView.setTeasers();
   Article.fetchAll();
+  
 };
