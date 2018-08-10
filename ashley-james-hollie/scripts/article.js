@@ -45,7 +45,11 @@ Article.fetchAll = () => {
   if (localStorage.rawData) {
     Article.loadAll(JSON.parse(localStorage.rawData));
   } else {
-    //Insert Else
+    $.getJSON('./data/hackerIpsum.json')
+      .then(function(rawArticles) {
+        localStorage.setItem('rawData', JSON.stringify(rawArticles));
+        Article.loadAll(rawArticles);
+      });
   }
   articleView.initIndexPage();
 }
