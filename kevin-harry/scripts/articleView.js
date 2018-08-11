@@ -118,3 +118,6 @@ articleView.initIndexPage = () => {
   articleView.handleMainNav();
   articleView.setTeasers();
 };
+
+// this can also be added in a <script> tag on the HTML
+// Article.fetchAll();

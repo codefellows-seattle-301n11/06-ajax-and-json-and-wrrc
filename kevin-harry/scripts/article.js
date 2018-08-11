@@ -17,7 +17,7 @@ Article.all = [];
 Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
 
-  this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
+  this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/1000/60/60/24);
 
   // COMMENT: What is going on in the line below? What do the question mark and colon represent? How have we seen this same logic represented previously?
   // Not sure? Check the docs!
@@ -35,6 +35,7 @@ Article.prototype.toHtml = function() {
 // COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
 // PUT YOUR RESPONSE HERE
 Article.loadAll = articleData => {
+  console.log('Article.loadAll() input articleData', articleData);
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
   articleData.forEach(articleObject => Article.all.push(new Article(articleObject)))
@@ -42,12 +43,20 @@ Article.loadAll = articleData => {
 
 // REVIEW: This function will retrieve the data from either a local or remote source, and process it, then hand off control to the View.
 Article.fetchAll = () => {
-  // REVIEW: What is this 'if' statement checking for? Where was the rawData set to local storage?
+  localStorage.clear(); // use this to test the else section.
   if (localStorage.rawData) {
+    //console.log('testing grabbing data from localStorage cache');
 
-    Article.loadAll();
-
+    //takes a JSON string from localStorage and converts it to an object.
+    Article.loadAll(JSON.parse(localStorage.rawData));
+    articleView.initIndexPage();
   } else {
-
+    $.getJSON('./data/hackerIpsum.json')
+      //console.log('testing no local storage');
+      .then(function(data) {
+        Article.loadAll(data);
+        localStorage.rawData = JSON.stringify(data);
+        articleView.initIndexPage();
+      });
   }
 }
