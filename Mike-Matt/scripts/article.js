@@ -32,7 +32,7 @@ Article.prototype.toHtml = function() {
 
 // REVIEW: This function will take the rawData, how ever it is provided, and use it to instantiate all the articles. This code is moved from elsewhere, and encapsulated in a simply-named function for clarity.
 
-// COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
+// COMMENTED: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
 // The load all function is invoked on the if statement within another function.
 Article.loadAll = articleData => {
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
@@ -44,10 +44,14 @@ Article.loadAll = articleData => {
 Article.fetchAll = () => {
   // REVIEW: What is this 'if' statement checking for? Where was the rawData set to local storage?
   if (localStorage.rawData) {
-
-    Article.loadAll();
-
+    let parsedJSON = JSON.parse(localStorage.getItem('rawData'));
+    Article.loadAll(parsedJSON);
+    articleView.initIndexPage();
   } else {
-  
+    $.getJSON('./data/hackerIpsum.json').then(data => {
+      localStorage.setItem('rawData', JSON.stringify(data))
+      console.log('local storage success', data);
+      location.reload();
+    })
   }
 }
