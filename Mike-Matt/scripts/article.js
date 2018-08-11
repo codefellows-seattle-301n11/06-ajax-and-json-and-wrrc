@@ -32,8 +32,8 @@ Article.prototype.toHtml = function() {
 
 // REVIEW: This function will take the rawData, how ever it is provided, and use it to instantiate all the articles. This code is moved from elsewhere, and encapsulated in a simply-named function for clarity.
 
-// COMMENTEDISH: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
-// The load all function is invoked on the if statement within another function.
+// COMMENTED: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
+// The load all function is invoked on the if statement within another function. rawData is a global variable. This function is called in the index.html file as the last script. rawData represents the key from localStorage to be pulled.  Previously rawData was an array of objects in of our javascript.
 Article.loadAll = articleData => {
   articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
